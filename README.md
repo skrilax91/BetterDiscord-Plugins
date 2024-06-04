@@ -4,7 +4,7 @@ This is a simple [BetterDiscord](https://betterdiscord.app/) plugin that pings y
 
 ## Installation
 
-1. Right click [this link](https://raw.githubusercontent.com/CustomsPinger/CustomsPinger/main/CustomsPinger.plugin.js) and save the file to your BetterDiscord plugins folder.
+1. Right click [this link](https://raw.githubusercontent.com/skrilax91/Customs-Pinger/main/CustomsPinger.plugin.js) and save the file to your BetterDiscord plugins folder.
 2. Open Discord and go to `Settings > Plugins`.
 3. Enable the plugin by clicking the toggle switch.
 4. Click on the settings icon and configure the plugin to your liking.
