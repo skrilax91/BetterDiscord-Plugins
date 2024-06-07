@@ -1,7 +1,7 @@
 /**
  * @name KRP Channel Tracker
  * @description This is a plugin that track user alone in customs voice channel and in BDA waiting room
- * @version 0.0.5
+ * @version 0.0.6
  * @author Devix
  * @authorId 508968537977651201
  */
@@ -35,16 +35,15 @@ const config = {
     author: "Devix",
     authorId: "508968537977651201",
     authorLink: "",
-    version: "0.0.5",
+    version: "0.0.6",
     description: "This is a plugin that track user alone in customs voice channel and in BDA waiting room",
     source: "",
     changelog: [
         {
-            title: "New Features",
-            type: "added",
+            title: "Future Update",
+            type: "progress",
             items: [
-                "Added a new feature to watch BDA Waiting Room",
-                "Added a new feature to watch Customs Voice Channels"
+                "Add in Douane modal list of refused & blacklist"
             ]
         }
     ],

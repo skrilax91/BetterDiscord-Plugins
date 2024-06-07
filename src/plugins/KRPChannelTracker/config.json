@@ -5,22 +5,15 @@
     "author": "Devix",
     "authorId": "508968537977651201",
     "authorLink": "",
-    "version": "0.0.4",
+    "version": "0.0.6",
     "description": "This is a plugin that track user alone in customs voice channel and in BDA waiting room",
     "source": "",
     "changelog": [
         {
-            "title": "Modal Update",
-            "type": "added",
+            "title": "Future Update",
+            "type": "progress",
             "items": [
-                "Added modal showing when user is alone in customs voice channel or in BDA waiting room. This modal ask you if you want to join the channel or not."
-            ]
-        },
-        {
-            "title": "Update Check patch",
-            "type": "fixed",
-            "items": [
-                "Added settings to watch BDA waiting room and Customs voice channels"
+                "Add in Douane modal list of refused & blacklist"
             ]
         }
     ],
