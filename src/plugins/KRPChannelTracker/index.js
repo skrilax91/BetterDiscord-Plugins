@@ -8,11 +8,17 @@ module.exports = (Plugin, Library) => {
 
     const {DiscordModules, Patcher} = Api;
 
-    const {ConfirmationModal, Dispatcher, ChannelActions} = DiscordModules;
+    const {ConfirmationModal, Dispatcher, ChannelActions, PluginUpdater} = DiscordModules;
     
     return class extends Plugin {
 
         onStart() {
+            PluginUpdater.checkForUpdate(
+                config.info.name, 
+                config.info.version, 
+                "https://github.com/skrilax91/BetterDiscord-Plugins/blob/main/Plugins/KRPChannelTracker/KRPChannelTracker.plugin.js"
+            );
+
             Patcher.before(Dispatcher, "dispatch", (_, args) => {
                 const event = args[0];
                 if (!event || !event.type || event.type !== "CHANNEL_CREATE") return;
