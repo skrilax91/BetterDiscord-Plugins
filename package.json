@@ -1,0 +1,11 @@
+{
+  "name": "betterdiscord-plugins",
+  "version": "1.0.0",
+  "description": "This is a simple [BetterDiscord](https://betterdiscord.app/) plugin repository",
+  "scripts": {
+    "build": "zpl build",
+    "init": "zpl init"
+  },
+  "author": "",
+  "license": "ISC"
+}

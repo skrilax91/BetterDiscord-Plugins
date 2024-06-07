@@ -1,0 +1,41 @@
+{
+    "main": "index.js",
+    "id": "krp-channel-tracker",
+    "name":"KRP Channel Tracker",
+    "author": "Devix",
+    "authorId": "508968537977651201",
+    "authorLink": "",
+    "version": "0.0.1",
+    "description": "This is a plugin that track user alone in customs voice channel and in BDA waiting room",
+    "source": "",
+    "changelog": [
+        {
+            "title": "Initial Release",
+            "type": "added",
+            "items": [
+                "Initial Release"
+            ]
+        },
+        {
+            "title": "Modal Update",
+            "type": "added",
+            "items": [
+                "Added modal showing when user is alone in customs voice channel or in BDA waiting room. This modal ask you if you want to join the channel or not."
+            ]
+        }
+    ],
+    "defaultConfig": [
+        {
+            "type": "switch",
+            "id": "watchbda",
+            "name": "Watch BDA Waiting Room",
+            "value": false
+        },
+        {
+            "type": "switch",
+            "id": "watchcustoms",
+            "name": "Watch Customs Voice Channels",
+            "value": false
+        }
+    ]
+}
