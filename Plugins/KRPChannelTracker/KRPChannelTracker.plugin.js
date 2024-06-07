@@ -1,7 +1,7 @@
 /**
  * @name KRP Channel Tracker
  * @description This is a plugin that track user alone in customs voice channel and in BDA waiting room
- * @version 0.0.2
+ * @version 0.0.5
  * @author Devix
  * @authorId 508968537977651201
  */
@@ -35,22 +35,16 @@ const config = {
     author: "Devix",
     authorId: "508968537977651201",
     authorLink: "",
-    version: "0.0.2",
+    version: "0.0.5",
     description: "This is a plugin that track user alone in customs voice channel and in BDA waiting room",
     source: "",
     changelog: [
         {
-            title: "Initial Release",
+            title: "New Features",
             type: "added",
             items: [
-                "Initial Release"
-            ]
-        },
-        {
-            title: "Modal Update",
-            type: "added",
-            items: [
-                "Added modal showing when user is alone in customs voice channel or in BDA waiting room. This modal ask you if you want to join the channel or not."
+                "Added a new feature to watch BDA Waiting Room",
+                "Added a new feature to watch Customs Voice Channels"
             ]
         }
     ],
@@ -99,16 +93,16 @@ if (!global.ZeresPluginLibrary) {
 module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
      const plugin = (Plugin, Library) => {
 
-    const {DiscordModules, Patcher} = Api;
+    const {DiscordModules, PluginUpdater, Patcher} = Api;
 
-    const {ConfirmationModal, Dispatcher, ChannelActions, PluginUpdater} = DiscordModules;
+    const {ConfirmationModal, Dispatcher, ChannelActions} = DiscordModules;
     
     return class extends Plugin {
 
         onStart() {
             PluginUpdater.checkForUpdate(
-                config.info.name, 
-                config.info.version, 
+                config.name, 
+                config.version, 
                 "https://github.com/skrilax91/BetterDiscord-Plugins/blob/main/Plugins/KRPChannelTracker/KRPChannelTracker.plugin.js"
             );
 

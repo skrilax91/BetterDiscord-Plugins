@@ -1,0 +1,37 @@
+{
+    "info":{
+        "name":"KRP Channel Tracker",
+        "authors":[
+          {
+            "name":"Devix",
+            "discord_id":"508968537977651201",
+            "github_username":"skrilax91"
+          }
+        ],
+        "version":"0.0.2",
+        "description":"This is a plugin that track user alone in customs voice channel and in BDA waiting room",
+        "github":"",
+        "github_raw":""
+    },
+    "changelog":[
+        {"title":"New Stuff", "items":["Added script"]}
+    ],
+    "defaultConfig": [
+        {
+            "type": "switch",
+            "id": "watchbda",
+            "name": "Watch BDA Waiting Room",
+            "value": false
+        },
+        {
+            "type": "switch",
+            "id": "watchcustoms",
+            "name": "Watch Customs Voice Channels",
+            "value": false
+        }
+    ],
+
+
+
+    "main":"index.js"
+}

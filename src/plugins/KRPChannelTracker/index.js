@@ -6,16 +6,16 @@
  */
 module.exports = (Plugin, Library) => {
 
-    const {DiscordModules, Patcher} = Api;
+    const {DiscordModules, PluginUpdater, Patcher} = Api;
 
-    const {ConfirmationModal, Dispatcher, ChannelActions, PluginUpdater} = DiscordModules;
+    const {ConfirmationModal, Dispatcher, ChannelActions} = DiscordModules;
     
     return class extends Plugin {
 
         onStart() {
             PluginUpdater.checkForUpdate(
-                config.info.name, 
-                config.info.version, 
+                config.name, 
+                config.version, 
                 "https://github.com/skrilax91/BetterDiscord-Plugins/blob/main/Plugins/KRPChannelTracker/KRPChannelTracker.plugin.js"
             );
 
