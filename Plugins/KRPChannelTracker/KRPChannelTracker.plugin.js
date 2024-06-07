@@ -1,7 +1,7 @@
 /**
  * @name KRP Channel Tracker
  * @description This is a plugin that track user alone in customs voice channel and in BDA waiting room
- * @version 0.0.7
+ * @version 0.0.8
  * @author Devix
  * @authorId 508968537977651201
  */
@@ -35,7 +35,7 @@ const config = {
     author: "Devix",
     authorId: "508968537977651201",
     authorLink: "",
-    version: "0.0.7",
+    version: "0.0.8",
     description: "This is a plugin that track user alone in customs voice channel and in BDA waiting room",
     source: "",
     changelog: [
@@ -102,7 +102,7 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
             PluginUpdater.checkForUpdate(
                 config.name, 
                 config.version, 
-                "https://github.com/skrilax91/BetterDiscord-Plugins/blob/main/Plugins/KRPChannelTracker/KRPChannelTracker.plugin.js"
+                "https://raw.githubusercontent.com/skrilax91/BetterDiscord-Plugins/main/Plugins/KRPChannelTracker/KRPChannelTracker.plugin.js"
             );
 
             Patcher.before(Dispatcher, "dispatch", (_, args) => {

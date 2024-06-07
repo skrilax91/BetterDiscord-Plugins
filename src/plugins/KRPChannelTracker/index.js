@@ -16,7 +16,7 @@ module.exports = (Plugin, Library) => {
             PluginUpdater.checkForUpdate(
                 config.name, 
                 config.version, 
-                "https://github.com/skrilax91/BetterDiscord-Plugins/blob/main/Plugins/KRPChannelTracker/KRPChannelTracker.plugin.js"
+                "https://raw.githubusercontent.com/skrilax91/BetterDiscord-Plugins/main/Plugins/KRPChannelTracker/KRPChannelTracker.plugin.js"
             );
 
             Patcher.before(Dispatcher, "dispatch", (_, args) => {
