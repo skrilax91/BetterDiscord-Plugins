@@ -5,15 +5,15 @@
     "author": "Devix",
     "authorId": "508968537977651201",
     "authorLink": "",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "This is a plugin that track user alone in customs voice channel and in BDA waiting room",
     "source": "",
     "changelog": [
         {
-            "title": "Future Update",
-            "type": "progress",
+            "title": "Sound Update",
+            "type": "added",
             "items": [
-                "Add in Douane modal list of refused & blacklist"
+                "Added sound when someone join a voice channel"
             ]
         }
     ],

@@ -1,7 +1,7 @@
 /**
  * @name KRP Channel Tracker
  * @description This is a plugin that track user alone in customs voice channel and in BDA waiting room
- * @version 0.0.6
+ * @version 0.0.7
  * @author Devix
  * @authorId 508968537977651201
  */
@@ -35,15 +35,15 @@ const config = {
     author: "Devix",
     authorId: "508968537977651201",
     authorLink: "",
-    version: "0.0.6",
+    version: "0.0.7",
     description: "This is a plugin that track user alone in customs voice channel and in BDA waiting room",
     source: "",
     changelog: [
         {
-            title: "Future Update",
-            type: "progress",
+            title: "Sound Update",
+            type: "added",
             items: [
-                "Add in Douane modal list of refused & blacklist"
+                "Added sound when someone join a voice channel"
             ]
         }
     ],
@@ -114,6 +114,7 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
                 if (this.settings.watchbda) {
                     if (event.channel.name.includes("BDA ɴ°")) {
                         console.log("BDA channel created", event.channel.name);
+                        this.playSound();
                         this.showChannelCreateModal(event.channel.name, () => {
                             ChannelActions.selectVoiceChannel(event.channel.id);
                         });
@@ -123,6 +124,7 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
                 if (this.settings.watchcustoms) {
                     if (event.channel.name.includes("ᴅᴏᴜᴀɴᴇ ɴ°")) {
                         console.log("Douanes channel created", event.channel.name);
+                        this.playSound();
                         this.showChannelCreateModal(event.channel.name, () => {
                             ChannelActions.selectVoiceChannel(event.channel.id);
                         });
@@ -131,6 +133,12 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
 
                 return false;
             });
+        }
+
+        playSound() {
+            let sound = new Audio("https://www.myinstants.com/media/sounds/roblox-death-sound_1.mp3");
+            sound.volume = 1;
+            sound.play();
         }
 
         showChannelCreateModal(name, callback) {

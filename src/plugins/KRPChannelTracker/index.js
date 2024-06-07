@@ -28,6 +28,7 @@ module.exports = (Plugin, Library) => {
                 if (this.settings.watchbda) {
                     if (event.channel.name.includes("BDA ɴ°")) {
                         console.log("BDA channel created", event.channel.name);
+                        this.playSound();
                         this.showChannelCreateModal(event.channel.name, () => {
                             ChannelActions.selectVoiceChannel(event.channel.id);
                         });
@@ -37,6 +38,7 @@ module.exports = (Plugin, Library) => {
                 if (this.settings.watchcustoms) {
                     if (event.channel.name.includes("ᴅᴏᴜᴀɴᴇ ɴ°")) {
                         console.log("Douanes channel created", event.channel.name);
+                        this.playSound();
                         this.showChannelCreateModal(event.channel.name, () => {
                             ChannelActions.selectVoiceChannel(event.channel.id);
                         });
@@ -45,6 +47,12 @@ module.exports = (Plugin, Library) => {
 
                 return false;
             });
+        }
+
+        playSound() {
+            let sound = new Audio("https://www.myinstants.com/media/sounds/roblox-death-sound_1.mp3");
+            sound.volume = 1;
+            sound.play();
         }
 
         showChannelCreateModal(name, callback) {
