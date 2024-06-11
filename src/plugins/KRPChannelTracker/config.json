@@ -5,30 +5,115 @@
     "author": "Devix",
     "authorId": "508968537977651201",
     "authorLink": "",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "description": "This is a plugin that track user alone in customs voice channel and in BDA waiting room",
     "source": "",
     "changelog": [
         {
-            "title": "Sound Update",
+            "title": "Big Douane Update ",
             "type": "added",
             "items": [
-                "Added sound when someone join a voice channel"
+                "Added a button on user menu to make his douane. The button open a modal to make the douane",
+                "If the user is validated, a message will be sent in the validé douane channel with your answer",
+                "If the user is not validated, a message will be sent in the refusé douane channel with your answer",
+                "If the user is not validated and already have 2 refusé, a message will be sent in the blasklist douane channel"
+            ]
+        },
+        {
+            "title": "Utility Update",
+            "type": "added",
+            "items": [
+                "Added a button on user menu to Blacklist a user",
+                "Added a button on user menu to unblacklist a user"
+            ]
+        },
+        {
+            "title": "Big Staff Update",
+            "type": "progress",
+            "items": [
+                "A button to convocate a user in BDA will be added on the user menu",
+                "A button to fast duty a user will be added on the user menu"
             ]
         }
     ],
     "defaultConfig": [
         {
-            "type": "switch",
-            "id": "watchbda",
-            "name": "Watch BDA Waiting Room",
-            "value": false
+            "type": "category",
+            "id": "general",
+            "name": "Général",
+            "collapsible": true,
+            "shown": false,
+            "settings": [
+                {
+                    "type": "switch",
+                    "id": "fastDuty",
+                    "name": "Enable Fast Duty Button",
+                    "value": true
+                }
+            ]
         },
         {
-            "type": "switch",
-            "id": "watchcustoms",
-            "name": "Watch Customs Voice Channels",
-            "value": false
+            "type": "category",
+            "id": "moderation",
+            "name": "Moderation",
+            "collapsible": true,
+            "shown": false,
+            "settings": [
+                {
+                    "type": "switch",
+                    "id": "fastBdaConvocation",
+                    "name": "Enable Fast BDA Convocation Button on user menu",
+                    "value": false
+                }
+            ]
+        },
+        {
+            "type": "category",
+            "id": "douane",
+            "name": "Douanes",
+            "collapsible": true,
+            "shown": false,
+            "settings": [
+                {
+                    "type": "switch",
+                    "id": "douaneSwitcher",
+                    "name": "Enable Douane Switcher",
+                    "value": false
+                },
+                {
+                    "type": "switch",
+                    "id": "watchcustoms",
+                    "name": "Watch Douanes Voice Channels",
+                    "value": false
+                },
+                {
+                    "type": "switch",
+                    "id": "watchcustomsAlert",
+                    "name": "Sound alert when someone join a douane",
+                    "value": false
+                },
+                {
+                    "type": "switch",
+                    "id": "douaneHelper",
+                    "name": "Enable utility button for douanes on user menu",
+                    "value": true
+                }
+            ]
+        },
+        {
+            "type": "category",
+            "id": "bda",
+            "name": "BDA",
+            "collapsible": true,
+            "shown": false,
+            "settings": [
+                {
+                    "type": "switch",
+                    "id": "watchbda",
+                    "name": "Watch BDA Waiting Room",
+                    "value": false
+                }
+            ]
         }
     ]
 }

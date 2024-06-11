@@ -1,0 +1,37 @@
+<div id="douane-modal-wrapper">
+    <div class="callout-backdrop {{backdrop}}"></div>
+    <div class="modal-wrapper">
+        <div id="douane-modal" class="{{root}}">
+            <div class="header"><div class="title">{{header}}</div></div>
+            <div class="modal-body">
+                <div class="alert alert-info" role="alert">
+                    <h4 class="alert-heading">Bienvenue dans le module de douane</h4>
+                    <p>Vous pouvez ici valider ou refuser la douane d'un joueur, ou encore le blacklister.</p>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="douane-name" class="form-label">Prénom et Nom</label>
+                    <input type="text" class="form-control" id="douane-name" placeholder="Prénom et Nom">
+                </div>
+                <div class="mb-3">
+                    <label for="douane-note" class="form-label">Note</label>
+                    <input type="text" class="form-control" id="douane-note" placeholder="Note">
+                </div>
+                <div class="mb-3">
+                    <label for="douane-observations" class="form-label">Observations</label>
+                    <textarea class="form-control" id="douane-observations" rows="2"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="douane-server-known" class="form-label"> Serveur connu via</label>
+                    <input type="text" class="form-control" id="douane-server-known">
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-sm btn-danger">Blacklister le joueur</button>
+
+                <button type="button" class="btn btn-sm btn-warning" id="douane-reject">Refuser la douane</button>
+                <button type="button" class="btn btn-sm btn-success" id="douane-validate">Valider la douane</button>
+            </div>
+        </div>
+    </div>
+</div>
