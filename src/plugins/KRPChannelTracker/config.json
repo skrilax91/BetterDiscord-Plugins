@@ -5,34 +5,15 @@
     "author": "Devix",
     "authorId": "508968537977651201",
     "authorLink": "",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "description": "This is a plugin that track user alone in customs voice channel and in BDA waiting room",
     "source": "",
     "changelog": [
         {
-            "title": "Big Douane Update ",
-            "type": "added",
+            "title": "Douane popout",
+            "type": "fixed",
             "items": [
-                "Added a button on user menu to make his douane. The button open a modal to make the douane",
-                "If the user is validated, a message will be sent in the validé douane channel with your answer",
-                "If the user is not validated, a message will be sent in the refusé douane channel with your answer",
-                "If the user is not validated and already have 2 refusé, a message will be sent in the blasklist douane channel"
-            ]
-        },
-        {
-            "title": "Utility Update",
-            "type": "added",
-            "items": [
-                "Added a button on user menu to Blacklist a user",
-                "Added a button on user menu to unblacklist a user"
-            ]
-        },
-        {
-            "title": "Big Staff Update",
-            "type": "progress",
-            "items": [
-                "A button to convocate a user in BDA will be added on the user menu",
-                "A button to fast duty a user will be added on the user menu"
+                "Fixed douane popout not showing up"
             ]
         }
     ],

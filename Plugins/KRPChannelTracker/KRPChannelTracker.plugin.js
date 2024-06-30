@@ -1,7 +1,7 @@
 /**
  * @name KRP Channel Tracker
  * @description This is a plugin that track user alone in customs voice channel and in BDA waiting room
- * @version 0.0.9
+ * @version 0.0.10
  * @author Devix
  * @authorId 508968537977651201
  */
@@ -35,34 +35,15 @@ const config = {
     author: "Devix",
     authorId: "508968537977651201",
     authorLink: "",
-    version: "0.0.9",
+    version: "0.0.10",
     description: "This is a plugin that track user alone in customs voice channel and in BDA waiting room",
     source: "",
     changelog: [
         {
-            title: "Big Douane Update ",
-            type: "added",
+            title: "Douane popout",
+            type: "fixed",
             items: [
-                "Added a button on user menu to make his douane. The button open a modal to make the douane",
-                "If the user is validated, a message will be sent in the validé douane channel with your answer",
-                "If the user is not validated, a message will be sent in the refusé douane channel with your answer",
-                "If the user is not validated and already have 2 refusé, a message will be sent in the blasklist douane channel"
-            ]
-        },
-        {
-            title: "Utility Update",
-            type: "added",
-            items: [
-                "Added a button on user menu to Blacklist a user",
-                "Added a button on user menu to unblacklist a user"
-            ]
-        },
-        {
-            title: "Big Staff Update",
-            type: "progress",
-            items: [
-                "A button to convocate a user in BDA will be added on the user menu",
-                "A button to fast duty a user will be added on the user menu"
+                "Fixed douane popout not showing up"
             ]
         }
     ],
@@ -176,6 +157,7 @@ if (!global.ZeresPluginLibrary) {
  
 module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
      const plugin = (Plugin, Library) => {
+
     const {DiscordModules, PluginUpdater, Patcher, Utilities, ReactTools, DOMTools, DiscordClasses, WebpackModules} = Api;
 
     const {GuildMemberStore, Dispatcher, ChannelActions, MessageActions} = DiscordModules;
@@ -186,6 +168,9 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
 
     const douaneBuffer = [];
 
+    const krpGuildId = "953386925505540126";
+
+    // Channels ID
     const validateDouaneId = "1064004917477515385";
     const rejectDouaneId = "1050392607643160586";
     const blacklistChanelId = "1064643022928756817";
@@ -195,6 +180,32 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
     const refused1RoleId = "953547343532281886";
     const refused2RoleId = "953547720642142268";
     const refused3RoleId = "953547754393706558";
+    const citizenRoleId = "953386925526503511";
+
+    const onDutyRoleCorrelation = [
+        // Douanier
+        {roleId: "953386925564256302", onDutyRoleId: "1066482664569319475"},
+    ]
+
+        //////////////////////////////////////////
+    // Render Functions
+    //////////////////////////////////////////
+    function DouanePopout({user, canWhitelist, canBlacklist, canUnwhitelist, onDouaneButton, onBlacklistButton, onUnwhitelistButton}) {
+        if (!user) return null;
+
+        console.log("DouanePopout", user, canWhitelist, canBlacklist, canUnwhitelist);
+    
+        return BdApi.React.createElement("div", {className: "douane-block"}, [
+            BdApi.React.createElement("h2", {className: Utilities.formatString("douane-popout-header {{defaultColor}} {{eyebrow}} {{title}}", UserPopoutClasses)}, "Douane"),
+            BdApi.React.createElement("div", {className: "douane-buttons"}, [
+                BdApi.React.createElement("button", {onClick: () => onDouaneButton(user), type: "button", className: ("btn-warning " + ((!canWhitelist) ? "d-none" : "")), id: "btn-douane"}, "Douane"),
+                BdApi.React.createElement("button", {onclick: onBlacklistButton(user), type: "button", className: ("btn-danger " + ((!canBlacklist) ? "d-none" : "")), id: "btn-blacklist"}, "Blacklist"),
+                BdApi.React.createElement("button", {onclick: onUnwhitelistButton(user), type: "button", className: ("btn-danger " + ((!canUnwhitelist) ? "d-none" : "")), id: "btn-unwhitelist"}, "Unwhitelist"),
+            ])
+        ]);
+    }
+
+
 
     return class extends Plugin {
 
@@ -921,8 +932,12 @@ button.btn-warning {
   }
   .form-control-color.form-control-lg {
     height: calc(1.5em + 1rem + calc(var(--bs-border-width) * 2));
+  }
+
+  .d-none {
+    display: none !important;
   }`;
-            this.popoutHtml = `<div class="section__62b44" id="douane-popout">
+            this.popoutHtml = `<div id="douane-popout">
     <h2 class="douane-popout-header defaultColor__77578 {{eyebrow}} defaultColor__87d87 title_ef4a6d" data-text-variant="eyebrow">
         Douane
     </h2>
@@ -975,9 +990,6 @@ button.btn-warning {
         </div>
     </div>
 </div>`;
-
-            this.cancelUserPopout = () => {};
-            this.contextMenuPatches = [];
         }
 
         updateDouaneBuffer(id, values = {}) {
@@ -1012,7 +1024,7 @@ button.btn-warning {
             this.douaneModal = Utilities.formatString(this.douaneModal, DiscordClasses.Backdrop);
             this.douaneModal = Utilities.formatString(this.douaneModal, {root: ModalClasses.root, small: ModalClasses.small});
 
-            this.bindPopouts();
+            //this.bindPopouts();
 
             Patcher.before(Dispatcher, "dispatch", (_, args) => {
                 const event = args[0];
@@ -1025,6 +1037,22 @@ button.btn-warning {
 
                 return false;
             });
+
+            let test = BdApi.Webpack.getByStrings('.PENDING_INCOMING&&','Z.hidePersonalInformation','.PROFILE_POPOUT',{defaultExport:false})
+
+            BdApi.Patcher.after("KRPChannelTracker-popout", test, "Z", (_, [props], returnValue) => {
+                try {
+                    console.log("Popout", props, returnValue);
+                    if (!props || !props.user || !props.guild || props.guild.id != krpGuildId) return returnValue;
+                    return this.patchPopouts(props, returnValue);
+                } catch (e) {
+                    console.error(e);
+                    return returnValue;
+                }
+            });
+
+
+            console.log("Test", test);
         }
 
         playSound() {
@@ -1047,7 +1075,7 @@ button.btn-warning {
             if (this.settings.watchcustoms) {
                 if (event.channel.name.includes("ᴅᴏᴜᴀɴᴇ ɴ°")) {
                     console.log("Douanes channel created", event.channel.name);
-                    this.playSound();
+                    if (this.settings.watchcustomsAlert) this.playSound();
                     this.showChannelCreateModal(event.channel.name, () => {
                         ChannelActions.selectVoiceChannel(event.channel.id);
                     });
@@ -1070,53 +1098,39 @@ button.btn-warning {
             });
         }
 
-        patchPopouts(e) {
-            const popoutMount = (props) => {
-                const popout = document.querySelector(`[class*="userPopout_"], [class*="userPopoutOuter_"]`);
-                if (!popout || popout.querySelector("#douane-popout")) return;
-                console.log("not patched", popout);
-                const user = GuildMemberStore.getMember(props.displayProfile.guildId, props.user.id);
-                const name = GuildMemberStore.getNick(props.displayProfile.guildId, props.user.id) ?? props.user.username;
+        patchPopouts(props, returnValue) {
+            console.log("patching", props);
+            const user = GuildMemberStore.getMember(props.displayProfile.guildId, props.user.id);
+            const name = GuildMemberStore.getNick(props.guildId, props.user.id) ?? props.user.username;
 
-                console.log("Hello", user, name);
+            console.log("Hello", user, name);
 
-                // Add a douane section
-                const douaneBlock = DOMTools.createElement(this.popoutHtml);
-
-                const douaneButton = douaneBlock.querySelector("#btn-douane");
-                const blacklistButton = douaneBlock.querySelector("#btn-blacklist");
-                const unwhitelistButton = douaneBlock.querySelector("#btn-unwhitelist");
-
-                // remove accept, reject, block buttons if user have role "douane"
-                if (user.roles.includes("953386925526503511")) {
-                    douaneButton?.remove();
-                    blacklistButton?.remove();
-                } else {
-                    unwhitelistButton?.remove();
-
-                    if (user.roles.includes("953547754393706558")) {
-                        douaneButton?.remove();
-                        blacklistButton?.remove();
-                    }
+            // Add a douane section
+            const douaneBlock = BdApi.React.createElement(DouanePopout, {
+                user: user,
+                canWhitelist: !user.roles.includes(citizenRoleId) && !user.roles.includes(refused3RoleId),
+                canBlacklist: !user.roles.includes(citizenRoleId) && !user.roles.includes(refused3RoleId),
+                canUnwhitelist: user.roles.includes(citizenRoleId),
+                onDouaneButton: (user) => {
+                    console.log("Douane button clicked");
+                    this.onDouaneButton(user);
+                },
+                onBlacklistButton: () => {
+                    this.onBlacklistButton.bind(this)
+                },
+                onUnwhitelistButton: () => {
+                    this.onUnwhitelistButton.bind(this)
                 }
+            });
 
-                douaneButton?.addEventListener("click", () => this.onDouaneButton(user));
-                blacklistButton?.addEventListener("click", () => this.onBlacklistButton(user));
-                unwhitelistButton?.addEventListener("click", () => this.onUnwhitelistButton(user));
+            // douaneButton?.addEventListener("click", () => this.onDouaneButton(user));
+            // blacklistButton?.addEventListener("click", () => this.onBlacklistButton(user));
+            // unwhitelistButton?.addEventListener("click", () => this.onUnwhitelistButton(user));
 
 
-                let roleList = popout.querySelector(`[class*="roles_"]`);
-                roleList = roleList?.parentElement;
-                roleList?.parentNode?.insertBefore(douaneBlock, roleList.nextSibling);
-            }
+            returnValue.props.children.push(douaneBlock);
 
-            if (!e.addedNodes.length || !(e.addedNodes[0] instanceof Element)) return;
-            const element = e.addedNodes[0];
-            const popout = element.querySelector(`[class*="userPopout_"], [class*="userPopoutOuter_"]`) ?? element;
-            if (!popout || !popout.matches(`[class*="userPopout_"], [class*="userPopoutOuter_"]`)) return;
-            const props = Utilities.findInTree(ReactTools.getReactInstance(popout), m => m && m.user, {walkable: ["memoizedProps", "return"]});
-            console.log("popout added", props);
-            popoutMount(props);
+            return returnValue;
         }
 
 
@@ -1280,6 +1294,7 @@ button.btn-warning {
 
         onStop() {
             Patcher.unpatchAll();
+            BdApi.Patcher.unpatchAll("KRPChannelTracker-popout");
             BdApi.DOM.removeStyle(this.name);
         }
 
